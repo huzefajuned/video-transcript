@@ -1,20 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
-
-const buttonType = ["Play", "Pause", "Fast"];
-
-function formatTime(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes.toString().padStart(2, "0")}:${seconds
-    .toString()
-    .padStart(2, "0")}`;
-}
+import { buttonType, formatTime } from "../constants";
 
 function YouTubeVideoPlayer({ url }) {
   const [play, setPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [lastClickedButton, setLastClickedButton] = useState(null); // State to track the last clicked button
   const playerRef = useRef(null);
 
   useEffect(() => {
@@ -39,6 +31,8 @@ function YouTubeVideoPlayer({ url }) {
         playerRef.current.seekTo(currentTime + 10);
       }
     }
+
+    setLastClickedButton(btn); // Update the last clicked button
   }
 
   function handleProgressBarChange(e) {
@@ -51,7 +45,7 @@ function YouTubeVideoPlayer({ url }) {
 
   return (
     <div className="p-5 h-full w-full ">
-      <div className="bg-slate-300 p-5 rounded-md">
+      <div className="bg-slate-100 p-5 rounded-md">
         <ReactPlayer
           ref={playerRef}
           url={url}
@@ -70,11 +64,14 @@ function YouTubeVideoPlayer({ url }) {
         <div className="flex flex-row gap-10 ">
           {buttonType.map((btn) => (
             <button
-              key={btn}
-              onClick={() => handleButtonClick(btn)}
-              className="border border-gray-300 rounded-md p-2 hover:bg-blue-200"
+              key={btn.id}
+              onClick={() => handleButtonClick(btn.name)}
+              className={`border border-gray-300 rounded-md p-2  ${
+                lastClickedButton === btn.name ? "bg-green-500 text-white" : ""
+              }`}
             >
-              {btn}
+              <p className="text-2xl">{btn.icon}</p>
+              {btn.name}
             </button>
           ))}
           <p className="text-gray-600">

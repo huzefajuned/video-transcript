@@ -5,10 +5,7 @@ import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { VideoContext } from "../context/VideoContext";
 
 function VideoUploadComponent({ onVideoUpload }) {
-  const { uploadedVideo } = useContext(VideoContext);
-
-  console.log("uploadedVideo", uploadedVideo);
-
+  const { url, uploadedVideo } = useContext(VideoContext);
   const onDrop = useCallback(
     (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
@@ -26,11 +23,11 @@ function VideoUploadComponent({ onVideoUpload }) {
       <div
         {...getRootProps()}
         className={`flex items-center justify-center h-40 ${
-          isDragActive ? "bg-blue-100" : "bg-gray-100"
-        } hover:bg-blue-100 cursor-pointer transition duration-300 ease-in-out`}
+          isDragActive ? "bg-blue-800" : "bg-gray-100"
+        } hover:bg-blue-100 cursor-pointer transition duration-600 ease-in-out`}
       >
-        <input {...getInputProps()} />
-        <p className="text-gray-500 flex flex-col align-center justify-center gap-2">
+        <input {...getInputProps()} disabled={url !== ""} />
+        <p className="text-gray-700 flex flex-col align-center justify-center gap-2">
           <span className="flex items-center justify-center">
             {uploadedVideo ? (
               <IoCheckmarkDoneSharp
@@ -45,7 +42,7 @@ function VideoUploadComponent({ onVideoUpload }) {
           <span className="flex items-center">
             {isDragActive
               ? `Drop the video file here...`
-              : "Drag & drop a video file here, or click to select one"}
+              : "Drag & drop a video file here, or select one"}
           </span>
         </p>
       </div>

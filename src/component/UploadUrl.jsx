@@ -34,7 +34,7 @@ function UploadUrl() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-secondayColor">
-      <div className="bg-white w-[500px] h-[auto] rounded-md flex flex-col gap-5 p-6 border-borderColor border-[1px] shadow-md">
+      <div className="bg-white w-[500px] h-[auto] rounded-xl flex flex-col gap-5 p-10 border-borderColor border-[1px] shadow-2xl">
         <h2 className="text-center text-2xl">
           Please Upload Video or Paste URL
         </h2>
@@ -44,6 +44,7 @@ function UploadUrl() {
           value={url || ""}
           className="border-[1.5px] p-2 rounded-md outline-none"
           onChange={handleUrlChange}
+          disabled={uploadedVideo !== null}
         />
 
         {invalidUrl && url !== "" && (
@@ -56,7 +57,7 @@ function UploadUrl() {
             <h3 className="truncate w-9/12">{url || uploadedVideo?.path}</h3>
             <button
               className="bg-primaryColor text-black p-2 rounded-md hover:bg-blue-600 hover:text-white "
-              onClick={() => navigate("/Transcripter")}
+              onClick={() => navigate("/Editor")}
             >
               Continue
             </button>

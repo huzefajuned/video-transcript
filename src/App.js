@@ -12,7 +12,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<UploadUrl />} />
-            <Route path="/Transcripter" element={<VideoTranscripter />} />
+            <Route path="/Editor" element={<VideoTranscripter />} />
           </Routes>
         </BrowserRouter>
       </VideoContextProvider>
