@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import UploadUrl from "./component/UploadUrl";
+import VideoTranscripter from "./component/VideoTranscripter";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { VideoContextProvider } from "./context/VideoContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <VideoContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<UploadUrl />} />
+            <Route path="/Transcripter" element={<VideoTranscripter />} />
+          </Routes>
+        </BrowserRouter>
+      </VideoContextProvider>
+    </>
   );
 }
 
