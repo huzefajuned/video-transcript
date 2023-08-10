@@ -19,10 +19,10 @@ function VideoUploadComponent({ onVideoUpload }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="p-8 border border-dashed border-gray-300 rounded-lg shadow-md">
+    <div className="border-2 border-dashed border-gray-300 rounded-lg shadow-md ">
       <div
         {...getRootProps()}
-        className={`flex items-center justify-center h-40 ${
+        className={`flex items-center justify-center h-40 rounded-lg ${
           isDragActive ? "bg-blue-800" : "bg-gray-100"
         } hover:bg-blue-100 cursor-pointer transition duration-600 ease-in-out`}
       >

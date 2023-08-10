@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import UploadUrl from "./component/UploadUrl";
 import VideoTranscripter from "./component/VideoTranscripter";

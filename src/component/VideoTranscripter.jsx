@@ -12,41 +12,40 @@ function VideoTranscripter() {
 
   useEffect(() => {
     if (uploadedVideo !== null) {
-      const video__URL = URL?.createObjectURL(uploadedVideo);
-      setVideoURL(video__URL);
+      const videoURL = URL.createObjectURL(uploadedVideo);
+      setVideoURL(videoURL);
     }
-    // it will chnage uplaoed video to URL
   }, [uploadedVideo]);
 
   useEffect(() => {
     if (!uploadedVideo && !url) {
       navigate("/");
     }
-  }, []);
+  }, [navigate, uploadedVideo, url]);
+
   return (
-    <div className="bg-secondayColor h-full w-full flex flex-col">
+    <div className="h-screen w-screen flex flex-col">
       <Header />
-      <div className="bg-secondayColor flex flex-row">
-        <div className="w-1/2 ">
-          {/*fix this issue in one--- */}
-          {url && <YouTubeVideoPlayer url={url} />}
-          {videoURL && <YouTubeVideoPlayer url={videoURL} />}
+      <div className="flex gap-10 ">
+        <div className="w-5/12 border-r-2">
+          {url || videoURL ? (
+            <YouTubeVideoPlayer url={url || videoURL} />
+          ) : null}
         </div>
-        <div className="w-1/2">
-          <div className="p-4 max-w-md mx-auto border rounded shadow mt-5">
-            <h2 className="text-xl font-semibold mb-4">Video Transcript</h2>
-            <div className="space-y-4">
-              {fakeTranscript.map(
-                (
-                  entry,
-                  index //
-                ) => (
-                  <div key={index} className="flex">
-                    <div className="w-1/4 font-medium">{entry.speaker}:</div>
-                    <div className="w-3/4">{entry.text}</div>
+        <div className="w-5/12">
+          <div className=" rounded  p-4 h-full">
+            <div className="overflow-auto h-full">
+              {fakeTranscript.map((entry, index) => (
+                <div key={index} className="mb-1">
+                  <div className="flex items-center mb-1 gap-10">
+                    <p className="font-medium text-blue-700 text-xl">
+                      {entry.speaker}:
+                    </p>
+                    <p className="text-gray-400 text-lg">{entry.time}</p>
                   </div>
-                )
-              )}
+                  <p className="text-gray-800 text-base">{entry.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

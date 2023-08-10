@@ -33,11 +33,16 @@ function UploadUrl() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-secondayColor">
-      <div className="bg-white w-[500px] h-[auto] rounded-xl flex flex-col gap-5 p-10 border-borderColor border-[1px] shadow-2xl">
-        <h2 className="text-center text-2xl">
-          Please Upload Video or Paste URL
-        </h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-200">
+      <div className="bg-white w-[600px] h-[auto] rounded-xl flex flex-col gap-4 p-10  shadow-2xl">
+        <h2 className="text-center text-2xl">Video Upload</h2>
+
+        <VideoUploadComponent onVideoUpload={handleVideoUpload} />
+
+        <h3 className="text-center text-lg">Or</h3>
+
+        <h2 className="text-center text-2xl">Paste Url</h2>
+
         <input
           type="text"
           placeholder="Please paste a valid URL"
@@ -51,7 +56,6 @@ function UploadUrl() {
           <p className="text-red-600 text-sm">{invalidUrl}</p>
         )}
 
-        <VideoUploadComponent onVideoUpload={handleVideoUpload} />
         {(!invalidUrl && url) || uploadedVideo ? (
           <div className=" flex flex-row justify-between">
             <h3 className="truncate w-9/12">{url || uploadedVideo?.path}</h3>
