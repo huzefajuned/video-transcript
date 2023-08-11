@@ -22,14 +22,14 @@ export const buttonType = [
     name: "Back 10s",
     icon: <MdTimer10Select />,
   },
-  {
-    id: 4,
-    name: "Speed 2x",
-    icon: <AiFillPauseCircle />,
-  },
+  // {
+  //   id: 4,
+  //   name: "Speed 2x",
+  //   icon: <AiFillPauseCircle />,
+  // },
   {
     id: 5,
-    name: "Volume Up",
+    name: "Volume",
     icon: <BsFillVolumeUpFill />,
   },
   // },
