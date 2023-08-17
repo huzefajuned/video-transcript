@@ -4,7 +4,7 @@ import { videoStatusApi } from "../services";
 import { useNavigate } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 
-const SideMenu = ({ toggleMenu }) => {
+const SideMenu = ({ menuOpen }) => {
   const navigate = useNavigate();
   const [videoApiData, setVideoApiData] = useState([]);
   const [videoCredentials, setVideoCredentials] = useState([]);
@@ -46,40 +46,40 @@ const SideMenu = ({ toggleMenu }) => {
   }
 
   return (
-    <div className="w-[90%] mt-10 mx-auto overflow-hidden shadow-lg h-full">
-      {videoCredentials.map((videoCredential, index) => (
-        <div
-          key={index}
-          className="flex flex-col rounded-md bg-white shadow-md mb-4 border border-gray-200"
-        >
-          <button
-            className="absolute top-2 left-2 text-gray-400"
-            onClick={toggleMenu}
+    <div
+      className={`${
+        menuOpen ? "sm:w-6/12 md:w-4/12 xl:4/12 lg:w-2/12 w-full" : "w-0"
+      } h-full transition-all duration-300 fixed top-0 left-0 z-0 overflow-scroll no-scrollbar pt-[5%] bg-white shadow-xl`}
+    >
+      <div className="w-[90%]  mx-auto   h-full  flex flex-col gap-10 ">
+        {videoCredentials.map((videoCredential, index) => (
+          <div
+            key={index}
+            className="flex flex-col rounded-md  shadow-md border border-gray-200 bg-gray-100"
           >
-            <GrClose size={20} className="cursor-pointer" />
-          </button>
-          <h3 className="p-3 font-semibold text-lg text-black">
-            {videoCredential["title"]}
-          </h3>
-          <div className="p-4 text-center">
-            {videoApiData.length <= 0 ? (
-              <h2>Please wait ...</h2>
-            ) : (
-              videoApiData[index]?.["status"] && (
-                <span className="mt-2 px-4 py-2 text-black rounded-md text-lg">
-                  {videoApiData[index]["status"]}
-                </span>
-              )
-            )}
-            <button
-              className="mt-4 px-4 py-2 text-black rounded-md bg-slate-200"
-              onClick={() => handleOpenVideo(videoCredential)}
-            >
-              View
-            </button>
+            <h3 className="p-3 font-semibold text-lg text-black">
+              {videoCredential["title"]}
+            </h3>
+            <div className="p-4 text-center">
+              {videoApiData.length <= 0 ? (
+                <h2>Please wait ...</h2>
+              ) : (
+                videoApiData[index]?.["status"] && (
+                  <span className="mt-2 px-4 py-2 text-black rounded-md text-lg">
+                    {videoApiData[index]["status"]}
+                  </span>
+                )
+              )}
+              <button
+                className="mt-4 px-4 py-2 text-black rounded-md bg-slate-200"
+                onClick={() => handleOpenVideo(videoCredential)}
+              >
+                View
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

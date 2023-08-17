@@ -19,7 +19,7 @@ function VideoUploadComponent({ onVideoUpload }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="border-2 border-dashed border-gray-300 rounded-lg shadow-md ">
+    <div className="border-2 border-dashed border-gray-300 rounded-lg shadow-md">
       <div
         {...getRootProps()}
         className={`flex items-center justify-center h-40 rounded-lg ${
@@ -40,7 +40,7 @@ function VideoUploadComponent({ onVideoUpload }) {
               <FaFileUpload size={35} className="text-center" />
             )}
           </span>
-          <span className="flex items-center">
+          <span className="flex items-center  text-xs sm:text-lg md:text-xl xl:text-xl lg:text-2xl">
             {isDragActive
               ? `Drop the video file here...`
               : "Drag & drop a video file here, or select one"}

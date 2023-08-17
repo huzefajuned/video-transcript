@@ -31,7 +31,7 @@ function UploadUrl() {
     setLocalStorageData(localStorageData);
   }, []);
 
-  console.log("localStorageData all data", localStorageData?.length);
+  // console.log("localStorageData all data", localStorageData?.length);
 
   const handleVideoUpload = (videoFile) => {
     // add this functuonlity later -- upload video file
@@ -57,10 +57,6 @@ function UploadUrl() {
 
       reader.readAsDataURL(videoFile);
     }
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
   };
 
   const handleUrlChange = (e) => {
@@ -127,39 +123,35 @@ function UploadUrl() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
       {/* Side Menu */}
-      <div
-        className={`${
-          menuOpen ? "w-2/12" : "w-0"
-        } h-full transition-all duration-300 overflow-hidden fixed top-0 left-0 z-10 bg-white`}
-      >
-        <SideMenu toggleMenu={toggleMenu} />
-      </div>
+
+      <SideMenu menuOpen={menuOpen} />
 
       {/* Main Content */}
-      <div className="bg-white w-[600px] h-[auto] rounded-xl flex flex-col gap-4 p-10  shadow-2xl">
+      <div className="bg-white w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] rounded-xl flex flex-col gap-4 p-5 md:p-10 shadow-2xl ">
         {/* Hamburger menu and close icon */}
-
         {localStorageData?.length !== undefined ? (
-          menuOpen !== true ? (
+          menuOpen == false ? (
             <RxHamburgerMenu
               size={25}
-              className="cursor-pointer absolute top-4 left-4"
-              onClick={toggleMenu}
+              className="cursor-pointer absolute top-4 left-4 z-1000"
+              onClick={() => setMenuOpen(true)}
             />
           ) : (
             <GrClose
               size={25}
-              className="cursor-pointer absolute top-4 left-4"
-              onClick={toggleMenu}
+              className="cursor-pointer absolute top-4 left-4 z-1000"
+              onClick={() => setMenuOpen(false)}
             />
           )
         ) : (
           ""
         )}
 
-        <h2 className="text-center text-2xl">Video Upload</h2>
+        <h2 className="text-center text-lg sm:text-lg md:text-xl xl:text-xl lg:text-2xl">
+          Video Upload
+        </h2>
 
         <VideoUploadComponent onVideoUpload={handleVideoUpload} />
         {loadProcess > 0 && (
@@ -180,7 +172,9 @@ function UploadUrl() {
         )}
         <h3 className="text-center text-lg">Or</h3>
 
-        <h2 className="text-center text-2xl">Paste Url</h2>
+        <h2 className="text-center  text-lg sm:text-lg md:text-xl xl:text-xl lg:text-2xl">
+          Paste Url
+        </h2>
 
         <input
           type="text"
@@ -188,7 +182,6 @@ function UploadUrl() {
           value={url || ""}
           className="border-[1.5px] p-2 rounded-md outline-none"
           onChange={handleUrlChange}
-          // disabled={uploadedVideo !== null}
         />
 
         {invalidUrl && url !== "" && (
@@ -202,9 +195,9 @@ function UploadUrl() {
               className="h-[100px] w-[200px] object-cover text-center"
             />
           </div>
-        ) : (!invalidUrl && url) || uploadedVideo ? (
+        ) : !invalidUrl && url ? (
           <div className="flex flex-row justify-between">
-            <h3 className="truncate w-9/12">{url || uploadedVideo?.path}</h3>
+            <h3 className="truncate w-9/12">{url}</h3>
             <button
               className="bg-primaryColor text-black p-2 rounded-md hover:bg-blue-600 hover:text-white"
               onClick={() => fetchVideoApi(postVideoUrl, url)}
