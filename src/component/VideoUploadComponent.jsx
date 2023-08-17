@@ -26,7 +26,8 @@ function VideoUploadComponent({ onVideoUpload }) {
           isDragActive ? "bg-blue-800" : "bg-gray-100"
         } hover:bg-blue-100 cursor-pointer transition duration-600 ease-in-out`}
       >
-        <input {...getInputProps()} disabled={url !== ""} />
+        <input {...getInputProps()} disabled={true} />
+        {/* disabled={url !== ""}  add this later, when video upload works */}
         <p className="text-gray-700 flex flex-col align-center justify-center gap-2">
           <span className="flex items-center justify-center">
             {uploadedVideo ? (

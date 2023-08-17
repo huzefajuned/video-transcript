@@ -25,10 +25,6 @@ export async function transcribeVideoUrlApi(api_Url, video_url) {
 
 //  getting status of video through generated credetials...
 export async function videoStatusApi(api_Url, payloadData) {
-  // console.log("payloadData", payloadData["link"]);
-  // console.log("title", payloadData["title"]);
-  // console.log("transcript_id", payloadData["transcript_id"]);
-  // return;
   if (api_Url === "" || !payloadData) {
     return;
   } else {

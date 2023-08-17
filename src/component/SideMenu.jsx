@@ -2,61 +2,84 @@ import React, { useEffect, useState } from "react";
 import { getStatusUrl } from "../Locals";
 import { videoStatusApi } from "../services";
 import { useNavigate } from "react-router-dom";
+import { GrClose } from "react-icons/gr";
 
-const SideMenu = () => {
+const SideMenu = ({ toggleMenu }) => {
   const navigate = useNavigate();
-  const [videoApiData, setVideoApiData] = useState();
-  const [videoCredential, setVideoCredential] = useState({});
+  const [videoApiData, setVideoApiData] = useState([]);
+  const [videoCredentials, setVideoCredentials] = useState([]);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("videoCredentials"));
-    setVideoCredential(data);
+    if (Array.isArray(data)) {
+      setVideoCredentials(data);
+    } else {
+      setVideoCredentials([]);
+    }
   }, []);
 
   useEffect(() => {
-    console.log("useEffect inside menu");
-
-    // do api call
-
     async function fetchVideoApi(videoCredential) {
       try {
         const apiUrl = getStatusUrl; // Call the function to get the API URL
         const data = await videoStatusApi(apiUrl, videoCredential);
-        setVideoApiData(data);
+        return data; // Return the API response
       } catch (error) {
         console.log("error", error);
+        return {}; // Return an empty object in case of error
       }
     }
-    fetchVideoApi(videoCredential);
-  }, [videoCredential]);
 
-  console.log("videoApiData", videoApiData);
+    if (videoCredentials.length > 0) {
+      Promise.all(videoCredentials.map(fetchVideoApi))
+        .then((responses) => {
+          setVideoApiData(responses);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [videoCredentials]);
+
+  function handleOpenVideo(videoCredential) {
+    navigate("/Editor", { state: { videoCredential } });
+  }
 
   return (
-    <div className="w-[90%] mt-10 ml-4 border-2 border-white rounded-md overflow-hidden shadow-lg">
-      <div className="flex flex-col  rounded-md  bg-white  shadow-lg">
-        <button
-          onClick={() => navigate("/")}
-          className="p-2 text-sm text-gray-600 hover:text-gray-800 transition duration-300"
+    <div className="w-[90%] mt-10 mx-auto overflow-hidden shadow-lg h-full">
+      {videoCredentials.map((videoCredential, index) => (
+        <div
+          key={index}
+          className="flex flex-col rounded-md bg-white shadow-md mb-4 border border-gray-200"
         >
-          Go Back
-        </button>
-        <h3 className="cursor-pointer p-4 w-full text-center text-xl font-semibold text-gray-800">
-          Video Name:
-          <span className="inline-block mt-2 px-4 py-2 text-white  rounded-md bg-slate-700 text-lg">
+          <button
+            className="absolute top-2 left-2 text-gray-400"
+            onClick={toggleMenu}
+          >
+            <GrClose size={20} className="cursor-pointer" />
+          </button>
+          <h3 className="p-3 font-semibold text-lg text-black">
             {videoCredential["title"]}
-          </span>
-        </h3>
-
-        <div className="p-4 w-full text-center">
-          <h3 className="text-lg font-medium text-gray-700">Video Status</h3>
-          {videoApiData?.["status"] && (
-            <span className="inline-block mt-2 px-4 py-2 text-white  rounded-md bg-slate-700 text-lg">
-              {videoApiData["status"]} 🤔
-            </span>
-          )}
+          </h3>
+          <div className="p-4 text-center">
+            {videoApiData.length <= 0 ? (
+              <h2>Please wait ...</h2>
+            ) : (
+              videoApiData[index]?.["status"] && (
+                <span className="mt-2 px-4 py-2 text-black rounded-md text-lg">
+                  {videoApiData[index]["status"]}
+                </span>
+              )
+            )}
+            <button
+              className="mt-4 px-4 py-2 text-black rounded-md bg-slate-200"
+              onClick={() => handleOpenVideo(videoCredential)}
+            >
+              View
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

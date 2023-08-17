@@ -4,8 +4,9 @@ export const VideoContext = createContext();
 
 export const VideoContextProvider = ({ children }) => {
   const [url, setUrl] = useState("");
-  const [uploadedVideo, setUploadedVideo] = useState(null);
+  const [uploadedVideo, setUploadedVideo] = useState("");
   const [invalidUrl, setInvalidUrl] = useState(null);
+  const [loadProcess, setLoadProcess] = useState();
 
   return (
     <VideoContext.Provider
@@ -16,6 +17,8 @@ export const VideoContextProvider = ({ children }) => {
         setUploadedVideo,
         invalidUrl,
         setInvalidUrl,
+        loadProcess,
+        setLoadProcess,
       }}
     >
       {children}
