@@ -97,25 +97,17 @@ function UploadUrl() {
           console.error("Error parsing existing data:", parseError);
         }
       }
-
-      console.log("existingData before push", existingData);
-
       // Ensure that existingData is an array
       if (!Array.isArray(existingData)) {
         existingData = [];
       }
-
       // Add the new data object to the array
       existingData.push(data);
-
       // Save the updated array back to local storage
       localStorage.setItem("videoCredentials", JSON.stringify(existingData));
-
       setLoading(false);
-
-      console.log("existingData after push", existingData);
-
-      await navigate("/Editor"); // or use setTimeout
+      navigate("/Editor", { state: { data } }); // sending current response as state in  next route // to diplay in video player
+      // or use setTimeout
     } catch (error) {
       console.log("error", error);
       setLoading(false);

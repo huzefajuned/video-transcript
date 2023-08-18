@@ -41,7 +41,11 @@ function VideoTranscripter() {
     if (location.state !== null) {
       let videoCredential = location.state["videoCredential"];
       setSelectedCurrentVideo(videoCredential);
+      console.log("test 1");
     } else {
+      console.log("test 2");
+      console.log("location.state after2 ", location.state);
+
       navigate("/");
     }
   }, [location.state]);
@@ -58,24 +62,11 @@ function VideoTranscripter() {
     setLocalStorageData(localStorageData);
     if (localStorageData !== {} || localStorageData !== null) {
       // console.log("ok");
-    } else if (!uploadedVideo && !url) {
+    } else if (!url) {
       navigate("/");
+      console.log("test 3");
     }
   }, [navigate, uploadedVideo, url]);
-
-  {
-    selectedCurrentVideoStatus?.status &&
-      console.log(
-        "selectedCurrentVideoStatus",
-        selectedCurrentVideoStatus.status
-      );
-  }
-
-  {
-    // selectedCurrentVideoStatus[1] &&
-    console.log("selectedCurrentVideoStatus", selectedCurrentVideoStatus);
-  }
-  // console.log("selectedCurrentVideoStatus", selectedCurrentVideoStatus.status);
 
   const { link, title } = localStorageData;
   return (
