@@ -1,28 +1,50 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VideoContext } from "../context/VideoContext";
-import { useNavigate } from "react-router-dom";
 import YouTubeVideoPlayer from "./YoutubeVideoPlayer";
 import Header from "./Header";
 import { fakeTranscript } from "../constants";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SideMenu from "../component/SideMenu";
-import { getLocalStorageData } from "../services";
+import { getLocalStorageData, videoStatusApi } from "../services";
+import { getStatusUrl } from "../Locals";
 
 function VideoTranscripter() {
   const location = useLocation();
-  // console.log("location", location);
-  var url_state;
-  useEffect(() => {
-    if (location.state !== null) {
-      let videoCredential = location?.state["videoCredential"];
-      url_state = videoCredential?.link;
-    }
-  });
+  // const [url_state, setUrlState] = useState(null);
+  const [selectedCurrentVideo, setSelectedCurrentVideo] = useState(null);
+  const [selectedCurrentVideoStatus, setSelectedCurrentVideoStatus] =
+    useState(null);
 
   const { url, uploadedVideo } = useContext(VideoContext);
   const navigate = useNavigate();
   const [videoURL, setVideoURL] = useState(null);
   const [localStorageData, setLocalStorageData] = useState({});
+
+  // get status of current video --
+  useEffect(() => {
+    // this api is for getting status or transcript of already pushed video url---
+    async function fetchVideoApi(setSelectedCurrentVideo) {
+      // console.log("fetchVideoApi hit");
+      try {
+        const apiUrl = getStatusUrl; // Call the function to get the API URL
+        const data = await videoStatusApi(apiUrl, setSelectedCurrentVideo);
+        await setSelectedCurrentVideoStatus(data);
+        // return data; // Return the API response
+      } catch (error) {
+        console.log("error", error);
+        return {}; // Return an empty object in case of error
+      }
+    }
+    fetchVideoApi(selectedCurrentVideo);
+  }, [selectedCurrentVideo]);
+  useEffect(() => {
+    if (location.state !== null) {
+      let videoCredential = location.state["videoCredential"];
+      setSelectedCurrentVideo(videoCredential);
+    } else {
+      navigate("/");
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (uploadedVideo !== "") {
@@ -35,40 +57,64 @@ function VideoTranscripter() {
     const localStorageData = getLocalStorageData();
     setLocalStorageData(localStorageData);
     if (localStorageData !== {} || localStorageData !== null) {
-      console.log("ok");
+      // console.log("ok");
     } else if (!uploadedVideo && !url) {
       navigate("/");
     }
   }, [navigate, uploadedVideo, url]);
 
+  {
+    selectedCurrentVideoStatus?.status &&
+      console.log(
+        "selectedCurrentVideoStatus",
+        selectedCurrentVideoStatus.status
+      );
+  }
+
+  {
+    // selectedCurrentVideoStatus[1] &&
+    console.log("selectedCurrentVideoStatus", selectedCurrentVideoStatus);
+  }
+  // console.log("selectedCurrentVideoStatus", selectedCurrentVideoStatus.status);
+
   const { link, title } = localStorageData;
   return (
     <div className="h-screen w-screen flex flex-col">
       <Header />
-      <div className="flex gap-10 ">
-        {/* Side Menu */}
-
-        <div className="w-4/12 border-r-2">
-          {url || videoURL || link || url_state ? (
-            <YouTubeVideoPlayer url={url || videoURL || link || url_state} />
+      <div className="flex flex-col md:flex-row gap-10">
+        <div className="w-full md:w-1/3 border-r-2">
+          {url || videoURL || link || selectedCurrentVideo?.link ? (
+            <YouTubeVideoPlayer
+              url={url || videoURL || link || selectedCurrentVideo?.link}
+            />
           ) : null}
         </div>
-        <div className="w-5/12 p-10">
-          <div className="rounded h-full">
-            <div className="overflow-auto h-full">
+        <div className="w-full md:w-5/12 p-10">
+          <div className="rounded h-full overflow-hidden">
+            <div className="overflow-auto h-full  block">
               {fakeTranscript ? (
-                <h2>Please wait , we are processing your request</h2>
+                <div className="h-full w-full flex justify-center items-center ">
+                  {selectedCurrentVideoStatus?.[1] !== undefined ? (
+                    selectedCurrentVideoStatus?.[1]
+                  ) : selectedCurrentVideoStatus?.status ? (
+                    selectedCurrentVideoStatus?.status
+                  ) : (
+                    <h2 className="text-center  p-4">
+                      Please wait, we are processing your request{" "}
+                    </h2>
+                  )}
+                </div>
               ) : (
                 fakeTranscript.map((entry, index) => (
                   <div
                     key={index}
                     className="mb-1 border-b-[1px] pb-2 border-b-[#8c8d8d]"
                   >
-                    <div className="flex items-center mb-1 gap-10">
-                      <p className="text-[#5730d8] text-2xl font-bold">
+                    <div className="flex flex-col md:flex-row items-center md:mb-1 gap-10">
+                      <p className="text-[#5730d8] text-2xl font-bold md:w-2/6">
                         {entry.speaker}:
                       </p>
-                      <p className="text-gray-400 text-xl font-bold">
+                      <p className="text-gray-400 text-xl font-bold md:w-4/6">
                         {entry.time}
                       </p>
                     </div>

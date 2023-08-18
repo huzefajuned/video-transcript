@@ -2,6 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { buttonType, formatTime } from "../constants";
 import Notes from "./Notes";
+import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai";
+import { MdTimer10Select } from "react-icons/md";
+import {
+  BsFillVolumeUpFill,
+  BsVolumeDownFill,
+  BsVolumeMuteFill,
+} from "react-icons/bs";
+import CustomRangeInput from "./CustomRangeInput";
 
 function YouTubeVideoPlayer({ url }) {
   const [play, setPlay] = useState(false);
@@ -63,8 +71,8 @@ function YouTubeVideoPlayer({ url }) {
   }
 
   return (
-    <div className="h-full w-full ">
-      <div className=" p-0 m-0">
+    <div className=" w-full p-[1px] h-[90vh] ">
+      <div className="p-0 m-0 ">
         <ReactPlayer
           ref={playerRef}
           url={url}
@@ -72,29 +80,77 @@ function YouTubeVideoPlayer({ url }) {
           width="100%"
           onDuration={(duration) => setDuration(duration)}
         />
-        <input
-          type="range"
-          min={0}
-          max={duration}
-          value={currentTime}
-          onChange={handleProgressBarChange}
-          className="w-full h-full"
-          style={{
-            // Apply your custom styles here
-            appearance: "progress-bar",
-            borderRadius: "10px", // Rounded corners
-            background: "gray", // Base color of the slider track
-          }}
-        />
-        <div className=" flex flex-row justify-between">
-          <p className="text-black text-base">00:00</p>
-          <p className="text-black text-2xl font-bold">
-            {formatTime(Math.floor(currentTime))}
-          </p>
-          <p className="text-black text-base">{formatTime(duration)}</p>
+        <div className=" w-[90%] ml-[5%]">
+          <CustomRangeInput
+            min={0}
+            max={duration}
+            onChange={handleProgressBarChange}
+            value={currentTime}
+          />
+
+          <div className=" flex flex-row justify-between">
+            <p className="text-black text-base">00:00</p>
+            <p className="text-black text-2xl font-bold">
+              {formatTime(Math.floor(currentTime))}
+            </p>
+            <p className="text-black text-base">{formatTime(duration)}</p>
+          </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between border-[1px] border-r-0 border-l-0 mt-4 ">
-          {buttonType.map((btn) => (
+          {play ? (
+            <button className="text-sm border-l-[2px] text-center  w-[100px] p-[3px] flex flex-col items-center justify-center text-gray-600 ">
+              <div
+                onClick={() => setPlay(false)}
+                className="flex items-center justify-center"
+              >
+                <p className="text-2xl text-center">
+                  <AiFillPauseCircle />
+                </p>
+              </div>
+              <span className="text-lg">Pause</span>
+            </button>
+          ) : (
+            <button className="text-sm border-l-[2px] text-center  w-[100px] p-[3px] flex flex-col items-center justify-center text-gray-600">
+              <div
+                onClick={() => setPlay(true)}
+                className="flex items-center justify-center"
+              >
+                <p className="text-2xl text-center">
+                  <AiFillPlayCircle />
+                </p>
+              </div>
+              <span className="text-lg">Play</span>
+            </button>
+          )}
+
+          <button className="text-sm border-l-[2px] text-center  w-[100px] p-[3px] flex flex-col items-center justify-center text-gray-600">
+            <div className="flex items-center justify-center">
+              <p className="text-2xl text-center">
+                <MdTimer10Select />
+              </p>
+            </div>
+            <span className="text-lg">Back 10s</span>
+          </button>
+
+          <button className="text-sm border-l-[2px] text-center  w-[100px] p-[3px] flex flex-col items-center justify-center text-gray-600">
+            <div className="flex items-center justify-center">
+              <p className="text-2xl text-center">
+                <AiFillPauseCircle />
+              </p>
+            </div>
+            <span className="text-lg">1X Speed</span>
+          </button>
+
+          <button className="text-sm border-l-[2px] text-center  w-[100px] p-[3px] flex flex-col items-center justify-center text-gray-600">
+            <div className="flex items-center justify-center">
+              <p className="text-2xl text-center">
+                <BsFillVolumeUpFill />
+              </p>
+            </div>
+            <span className="text-lg">Volume</span>
+          </button>
+
+          {/* {buttonType.map((btn) => (
             <button
               key={btn.id}
               onClick={() => handleButtonClick(btn.name)}
@@ -109,7 +165,7 @@ function YouTubeVideoPlayer({ url }) {
               </div>
               <span className="text-lg">{btn.name}</span>
             </button>
-          ))}
+          ))} */}
         </div>
         <Notes />
       </div>

@@ -32,18 +32,6 @@ export const buttonType = [
     name: "Volume",
     icon: <BsFillVolumeUpFill />,
   },
-  // },
-  // {
-  //   id: 6,
-  //   name: "Volume Down",
-  //   icon: <BsVolumeDownFill />,
-  // },
-
-  // {
-  //   id: 7,
-  //   name: "Mute",
-  //   icon: <BsVolumeMuteFill />,
-  // },
 ];
 
 export function formatTime(time) {

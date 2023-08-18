@@ -13,3 +13,22 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+/* // */
+/* CustomRangeInput.css */
+.slider::-webkit-slider-thumb {
+  visibility: hidden;
+  /* display: none; */
+}
+
+.slider::-moz-range-thumb {
+  /* display: none; */
+
+  visibility: hidden;
+}
+
+.slider::-ms-thumb {
+  visibility: hidden;
+
+  /* display: none; */
+}
