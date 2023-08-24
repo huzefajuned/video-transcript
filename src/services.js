@@ -51,14 +51,5 @@ export async function videoStatusApi(api_Url, payloadData) {
 
 export function getLocalStorageData() {
   const data = JSON.parse(localStorage.getItem("videoCredentials"));
-  // if (data === null) {
-  //   return {
-  //     videoCredentials: {
-  //       name: "test",
-  //       id: 11,
-  //       url: "test-url",
-  //     },
-  //   };
-  // }
   return data;
 }

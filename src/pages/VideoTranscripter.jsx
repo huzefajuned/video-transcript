@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VideoContext } from "../context/VideoContext";
-import YouTubeVideoPlayer from "./YoutubeVideoPlayer";
-import Header from "./Header";
+import YouTubeVideoPlayer from "../component/YoutubeVideoPlayer";
+import Header from "../component/Header";
 import { fakeTranscript } from "../constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import SideMenu from "../component/SideMenu";

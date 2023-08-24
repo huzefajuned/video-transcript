@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import VideoUploadComponent from "./VideoUploadComponent";
+import VideoUploadComponent from "../component/VideoUploadComponent";
 import { VideoContext } from "../context/VideoContext";
 import { getLocalStorageData, transcribeVideoUrlApi } from "../services";
 import { postVideoUrl } from "../Locals";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { GrClose } from "react-icons/gr";
-import SideMenu from "./SideMenu";
 
-function UploadUrl() {
+const Home = () => {
   const navigate = useNavigate();
 
   const {
@@ -26,10 +23,10 @@ function UploadUrl() {
 
   const [loading, setLoading] = useState(false);
   const [localStorageData, setLocalStorageData] = useState({});
-  useEffect(() => {
-    const localStorageData = getLocalStorageData();
-    setLocalStorageData(localStorageData);
-  }, []);
+  // useEffect(() => {
+  //   const localStorageData = getLocalStorageData();
+  //   setLocalStorageData(localStorageData);
+  // }, []);
 
   // console.log("localStorageData all data", localStorageData?.length);
 
@@ -85,6 +82,9 @@ function UploadUrl() {
     try {
       var data = await transcribeVideoUrlApi(postVideoUrl, url);
 
+      // Add timestamp to the data object
+      data.timestamp = new Date().getTime();
+
       // Get existing data from local storage (if any)
       const existingDataJSON = localStorage.getItem("videoCredentials");
 
@@ -105,8 +105,9 @@ function UploadUrl() {
       existingData.push(data);
       // Save the updated array back to local storage
       localStorage.setItem("videoCredentials", JSON.stringify(existingData));
+
       setLoading(false);
-      navigate("/Editor", { state: { data } }); // sending current response as state in  next route // to diplay in video player
+      navigate("/ViewVideo", { state: { data } }); // sending current response as state in  next route // to diplay in video player
       // or use setTimeout
     } catch (error) {
       console.log("error", error);
@@ -178,6 +179,6 @@ function UploadUrl() {
       </div>
     </div>
   );
-}
+};
 
-export default UploadUrl;
+export default Home;
