@@ -21,7 +21,7 @@
 }
 
 .active {
-  @apply bg-blue-100 text-blue-600;
+  @apply bg-blue-100 text-primaryColor;
 }
 
 @layer utilities {

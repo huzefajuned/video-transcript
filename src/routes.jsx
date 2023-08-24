@@ -5,6 +5,7 @@ import * as BiIcons from "react-icons/bi";
 import * as MdIcons from "react-icons/md";
 
 export const size = 30;
+
 export const routes = [
   {
     title: "Home",
@@ -25,10 +26,4 @@ export const routes = [
     icon: <BiIcons.BiSolidLogInCircle size={size} className="min-w-max" />,
     cName: "nav-text",
   },
-  // {
-  //   title: "Sing-Up",
-  //   path: "/Sign-up",
-  //   icon: <BiIcons.BiSolidLogInCircle size={size} className="min-w-max" />,
-  //   cName: "nav-text",
-  // },
 ];

@@ -28,7 +28,9 @@ const Sidebar = () => {
   }, [pathname]);
 
   function handleLogout() {
-    if (localStorage.getItem("auth_User")) {
+    const shouldLogout = window.confirm("Are you sure you want to log out?");
+
+    if (shouldLogout) {
       localStorage.removeItem("auth_User");
       navigate("/Login");
     }
@@ -80,7 +82,7 @@ const Sidebar = () => {
       };
 
   return (
-    <div>
+    <div className="">
       <div
         onClick={() => setOpen(false)}
         className={`xl:hidden fixed inset-0 max-h-screen z-[998] bg-black/50 ${
@@ -108,21 +110,26 @@ const Sidebar = () => {
               // Exclude the "Log In" route from being displayed when user is authenticated
               isAuth && rName.path === "/Login" ? null : (
                 <li className="" key={index}>
-                  <NavLink to={rName.path} className="link">
+                  <NavLink
+                    to={rName.path}
+                    className="link hover:bg-primaryColor hover:text-whiteColor hover:duration-600"
+                  >
                     {rName.icon}
                     {rName.title}
                   </NavLink>
                 </li>
               )
             )}
-
             {isAuth && (
-              <li className="" onClick={() => handleLogout()}>
-                <NavLink className="link">
-                  <AiOutlineLogout size={23} className="min-w-max" />
+              <div className="bg-white overflow-hidden">
+                <h2
+                  onClick={() => handleLogout()}
+                  className="p-2.5 flex  hover:bg-primaryColor hover:text-whiteColor hover:duration-600 rounded-md gap-6 items-center md:cursor-pointer  font-medium"
+                >
+                  <AiOutlineLogout size={23} className="" />
                   Log Out
-                </NavLink>
-              </li>
+                </h2>
+              </div>
             )}
           </ul>
         </div>

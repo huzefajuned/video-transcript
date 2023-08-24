@@ -23,7 +23,7 @@ const Table = ({ localStorageData: videoCredential }) => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <table className=" text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
           <tr>
             <th
@@ -35,14 +35,14 @@ const Table = ({ localStorageData: videoCredential }) => {
 
             <th
               scope="col"
-              className="px-6 py-3  text-lg bg-primaryColor  text-white dark:bg-gray-800"
+              className="px-6 py-3  text-center text-lg bg-primaryColor  text-white dark:bg-gray-800"
             >
               Date
             </th>
 
             <th
               scope="col"
-              className="px-6 py-3  text-lg bg-primaryColor  text-white"
+              className="px-6 py-3  text-lg text-center bg-primaryColor  text-white"
             >
               Actions
             </th>
@@ -51,22 +51,17 @@ const Table = ({ localStorageData: videoCredential }) => {
         {videoCredential?.length !== undefined ? (
           videoCredential?.map((item, index) => (
             <tbody>
-              <tr
-                key={index}
-                className="border-b border-gray-200 dark:border-gray-700"
-              >
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+              <tr key={index} className="border-b border-gray-200">
+                <td className="px-6 py-4 font-medium  text-gray-900 whitespace-nowrap">
                   {item.title}
                 </td>
-                <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                <td className="px-6 py-4  dark:bg-gray-800">
                   {convertTimestampToDateString(item.timestamp)}
                 </td>
-                {/* <td className="px-6 py-4">{item.price}</td> */}
                 <td className="px-6 py-4">
                   <button
-                    // onClick={() => handleView(item.link)}
                     onClick={() => handleOpenVideo(item)}
-                    className="text-blue-500"
+                    className="text-blue-500 bg-white  hover:bg-primaryColor hover:border-[1px] text-lg rounded-md w-40 h-10 transition duration-300 hover:bg-secondaryColor hover:text-white hover:duration-500"
                   >
                     View
                   </button>

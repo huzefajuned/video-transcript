@@ -2,9 +2,9 @@ import Sidebar from "./sidebar/Sidebar";
 
 function RootLayout({ children }) {
   return (
-    <div className="flex gap-5">
+    <div className="flex w-screen h-screen">
       <Sidebar />
-      <main className="max-w-5xl w-full flex-1 mx-auto py-4  ">{children}</main>
+      <main className=" w-[100%] ">{children}</main>
     </div>
   );
 }

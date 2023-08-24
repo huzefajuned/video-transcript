@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VideoContext } from "../context/VideoContext";
 import YouTubeVideoPlayer from "../component/YoutubeVideoPlayer";
-import Header from "../component/Header";
 import { fakeTranscript } from "../constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import SideMenu from "../component/SideMenu";
 import { getLocalStorageData, videoStatusApi } from "../services";
 import { getStatusUrl } from "../Locals";
 
@@ -71,7 +69,6 @@ function VideoTranscripter() {
   const { link, title } = localStorageData;
   return (
     <div className="h-screen w-screen flex flex-col">
-      <Header />
       <div className="flex flex-col md:flex-row gap-10">
         <div className="w-full md:w-1/3 border-r-2">
           {url || videoURL || link || selectedCurrentVideo?.link ? (
