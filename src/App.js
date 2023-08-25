@@ -1,39 +1,52 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import Login from "./pages/Login";
-import SingUp from "./pages/SingUp";
 import PreviousUploads from "./pages/PreviousUploads";
-import Home from "./pages/Home";
 import Auth from "./Auth";
 import VideoTranscripter from "./pages/VideoTranscripter";
+import Home from "./pages/Home";
+import Error from "./pages/Error";
 
 const App = () => {
   return (
-    <RootLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Sign-up" element={<SingUp />} />
+    <Routes>
+      <Route path="/" element={<Login />} />
 
-        <Route
-          path="/uploads"
-          element={
-            <Auth>
+      <Route
+        path="/Home"
+        element={
+          <Auth>
+            <RootLayout>
+              <Home />
+            </RootLayout>
+          </Auth>
+        }
+      />
+
+      <Route
+        path="/uploads"
+        element={
+          <Auth>
+            <RootLayout>
               <PreviousUploads />
-            </Auth>
-          }
-        />
+            </RootLayout>
+          </Auth>
+        }
+      />
 
-        <Route
-          path="/ViewVideo"
-          element={
-            <Auth>
+      <Route
+        path="/ViewVideo"
+        element={
+          <Auth>
+            <RootLayout>
               <VideoTranscripter />
-            </Auth>
-          }
-        />
-      </Routes>
-    </RootLayout>
+            </RootLayout>
+          </Auth>
+        }
+      />
+      <Route path="*" element={<Error />} />
+    </Routes>
   );
 };
 

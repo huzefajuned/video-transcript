@@ -12,7 +12,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { routes } from "../../routes";
 
 // logo
-import logo from "../../assets/images/logo.jpeg";
+import logo from "../../assets/images/logo.png";
 
 //AuthContext
 
@@ -26,6 +26,8 @@ const Sidebar = () => {
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const loggedUser = localStorage.getItem("auth_User");
+  const parsedUser = JSON.parse(loggedUser);
 
   useEffect(() => {
     if (localStorage.getItem("auth_User")) {
@@ -38,7 +40,7 @@ const Sidebar = () => {
 
     if (shouldLogout) {
       localStorage.removeItem("auth_User");
-      navigate("/Login");
+      navigate("/");
       toast.success(" Successfully Logout !");
       setIsAut(false);
     }
@@ -101,15 +103,21 @@ const Sidebar = () => {
         ref={sidebarRef}
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
-        // initial={{ x: 0 }}
         animate={open ? "open" : "closed"}
         className=" bg-white text-gray shadow-xl z-[999] max-w-[16rem]  w-[16rem] 
             overflow-hidden md:relative fixed
          h-screen "
       >
-        <div className="flex flex-row items-center justify-between overflow-x-hidden  font-medium border-b py-3 border-slate-300   mx-3">
-          <img src={logo} width={40} alt="" className="" />
-          <span className="text-3xl  whitespace-pre ">Dashboard</span>
+        <div className="flex flex-col   justify-between  overflow-x-hidden  font-medium border-b py-3 border-slate-300   mx-3">
+          <div className="flex flex-row items-center justify-between w-full">
+            <img src={logo} width={40} alt="" className="" />
+            <span className="text-3xl   font-semibold  whitespace-pre ">
+              Vid<span className="text-primaryColor">Scripter</span>
+            </span>
+          </div>
+          <p className="mt-5 text-sm text-secondayColor flex flex-row">
+            {parsedUser.cred.email}
+          </p>
         </div>
 
         <div className="flex flex-col  h-full">
@@ -130,7 +138,7 @@ const Sidebar = () => {
               )
             )}
             {isAuth && (
-              <div className="bg-white overflow-hidden">
+              <div className=" overflow-hidden absolute bottom-10  ">
                 <h2
                   onClick={() => handleLogout()}
                   className="p-2.5 flex  hover:bg-primaryColor hover:text-whiteColor hover:duration-600 rounded-md gap-6 items-center md:cursor-pointer  font-medium"

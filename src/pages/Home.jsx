@@ -21,20 +21,11 @@ const Home = () => {
     setLoadProcess,
   } = useContext(VideoContext);
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const [localStorageData, setLocalStorageData] = useState({});
-  // useEffect(() => {
-  //   const localStorageData = getLocalStorageData();
-  //   setLocalStorageData(localStorageData);
-  // }, []);
 
-  // console.log("localStorageData all data", localStorageData?.length);
-
+  // later user ( only for video upload )
   const handleVideoUpload = (videoFile) => {
-    // add this functuonlity later -- upload video file
-
     return;
     if (videoFile) {
       const reader = new FileReader();
@@ -127,7 +118,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen min-w-full bg-white">
       {/* Main Content */}
-      <div className="bg-primaryColor w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] rounded-xl flex flex-col gap-4 p-5 md:p-10 shadow-2xl ">
+      <div className="bg-primaryColor border-2 border-borderColor  w-[90%] sm:w-[80%] md:w-[90%]  lg:w-[70%] xl:w-[60%] 2xl:w-[40%] rounded-xl flex flex-col gap-4 p-5 md:p-10 shadow-2xl ">
         <h2 className="text-center text-lg sm:text-lg md:text-xl xl:text-xl lg:text-2xl">
           Video Upload
         </h2>
