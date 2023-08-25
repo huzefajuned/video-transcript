@@ -4,9 +4,10 @@ import YouTubeVideoPlayer from "../component/YoutubeVideoPlayer";
 import { fakeTranscript } from "../constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getLocalStorageData, videoStatusApi } from "../services";
-import { getStatusUrl } from "../Locals";
 
 function VideoTranscripter() {
+  const getStatusUrl = process.env.REACT_APP_GetStatusUrl;
+
   const location = useLocation();
   // const [url_state, setUrlState] = useState(null);
   const [selectedCurrentVideo, setSelectedCurrentVideo] = useState(null);

@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import VideoUploadComponent from "../component/VideoUploadComponent";
 import { VideoContext } from "../context/VideoContext";
 import { getLocalStorageData, transcribeVideoUrlApi } from "../services";
-import { postVideoUrl } from "../Locals";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const postVideoUrl = process.env.REACT_APP_PostVideoUrl;
 
   const {
     url,
@@ -107,7 +109,14 @@ const Home = () => {
       localStorage.setItem("videoCredentials", JSON.stringify(existingData));
 
       setLoading(false);
-      navigate("/ViewVideo", { state: { data } }); // sending current response as state in  next route // to diplay in video player
+      // navigating after 1 sec delay--
+      setTimeout(() => {
+        navigate("/uploads");
+        setUrl("");
+        toast.success("Video added successfully !");
+      }, 1000);
+      // navigate("/ViewVideo", { state: { data } });
+      // sending current response as state in  next route // to diplay in video player
       // or use setTimeout
     } catch (error) {
       console.log("error", error);

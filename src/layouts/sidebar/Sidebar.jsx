@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +14,18 @@ import { routes } from "../../routes";
 // logo
 import logo from "../../assets/images/logo.jpeg";
 
+//AuthContext
+
+import { AuthContext } from "../../context/AuthContext";
+
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 888px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
-  const [isAuth, setIsAut] = useState(false);
+  const { isAuth, setIsAut } = useContext(AuthContext);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem("auth_User")) {
       setIsAut(true);
@@ -33,6 +38,7 @@ const Sidebar = () => {
     if (shouldLogout) {
       localStorage.removeItem("auth_User");
       navigate("/Login");
+      setIsAut(false);
     }
   }
 
@@ -46,7 +52,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     isTabletMid && setOpen(false);
-  }, [pathname]);
+  }, []);
 
   const Nav_animation = isTabletMid
     ? {
@@ -109,11 +115,12 @@ const Sidebar = () => {
             {routes.map((rName, index) =>
               // Exclude the "Log In" route from being displayed when user is authenticated
               isAuth && rName.path === "/Login" ? null : (
-                <li className="" key={index}>
-                  <NavLink
-                    to={rName.path}
-                    className="link hover:bg-primaryColor hover:text-whiteColor hover:duration-600"
-                  >
+                <li
+                  className=""
+                  key={index}
+                  onClick={() => navigate(rName.path)}
+                >
+                  <NavLink className="link hover:bg-primaryColor hover:text-whiteColor hover:duration-600">
                     {rName.icon}
                     {rName.title}
                   </NavLink>

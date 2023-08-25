@@ -56,8 +56,8 @@ const Login = () => {
     setPsdVisible(!psdVisible);
   }
   return (
-    <div className="flex flex-row items-center justify-center gap-[5%]   ">
-      <div className="w-4/12 flex items-center justify-center  ">
+    <div className="flex flex-row items-center justify-between   ">
+      <div className="w-5/12 flex items-center justify-center  h-screen  ">
         <form className="p-8 bg-white  rounded-md flex flex-col gap-4 ">
           <div className=" flex flex-col  gap-3  ">
             <h2 className="text-4xl font-semibold ">Login</h2>
@@ -131,17 +131,17 @@ const Login = () => {
           </button>
 
           <p>
-            Don't have an Account ?{" "}
+            Don't have an Account ?
             <span className="text-primaryColor">Sign Up</span>
           </p>
           <p className="text-primaryColor "> Forgot Password</p>
         </form>
       </div>
-      <div className="w-7/12  h-screen   flex items-center justify-center ">
+      <div className="w-6/12  h-screen   flex items-center justify-center ">
         <img
           src={bgImg}
           alt="Random"
-          className="h-[90%] p-[5%] w-[80%] object-fill  rounded-lg bg-gradient-to-b from-primaryColor border-[0.5px]  border-gray-100"
+          className="h-[90%] p-[5%] w-[90%] object-fill  rounded-lg bg-gradient-to-b from-primaryColor border-[0.5px]  border-gray-100"
         />
       </div>
     </div>
