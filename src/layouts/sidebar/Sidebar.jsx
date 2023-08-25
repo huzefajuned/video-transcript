@@ -8,7 +8,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { NavLink, useLocation, useRoutes } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { routes } from "../../routes";
 
 // logo
@@ -17,9 +17,10 @@ import logo from "../../assets/images/logo.jpeg";
 //AuthContext
 
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
-  let isTabletMid = useMediaQuery({ query: "(max-width: 888px)" });
+  let isTabletMid = useMediaQuery({ query: "(max-width: 750px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
   const { isAuth, setIsAut } = useContext(AuthContext);
   const sidebarRef = useRef();
@@ -38,6 +39,7 @@ const Sidebar = () => {
     if (shouldLogout) {
       localStorage.removeItem("auth_User");
       navigate("/Login");
+      toast.success(" Successfully Logout !");
       setIsAut(false);
     }
   }
